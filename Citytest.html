@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="城遇">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="通过科学测试找到与你灵魂契合的理想之城">
+    
+    <title>城遇 - 找到你的天选之城</title>
+    
+    <!-- iOS图标 -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect fill='%23667eea' width='180' height='180' rx='40'/%3E%3Ctext x='90' y='115' font-size='80' text-anchor='middle'%3E🏙️%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" sizes="152x152" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 152 152'%3E%3Crect fill='%23667eea' width='152' height='152' rx='34'/%3E%3Ctext x='76' y='97' font-size='67' text-anchor='middle'%3E🏙️%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" sizes="167x167" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 167 167'%3E%3Crect fill='%23667eea' width='167' height='167' rx='37'/%3E%3Ctext x='83.5' y='107' font-size='74' text-anchor='middle'%3E🏙️%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect fill='%23667eea' width='180' height='180' rx='40'/%3E%3Ctext x='90' y='115' font-size='80' text-anchor='middle'%3E🏙️%3C/text%3E%3C/svg%3E">
+    
+    <!-- 安卓图标 -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23667eea' width='192' height='192' rx='48'/%3E%3Ctext x='96' y='125' font-size='85' text-anchor='middle'%3E🏙️%3C/text%3E%3C/svg%3E">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIue+jueUtyIsICJzaG9ydF9uYW1lIjogIue+jueUtyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjNjY3ZWVhIiwgInRoZW1lX2NvbG9yIjogIiM2NjdlZWEiLCAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxOTIgMTkyJyUzRSUzQ3JlY3QgZmlsbD0nIzY2N2VlYScgd2lkdGg9JzE5MicgaGVpZ2h0PScxOTInIHJ4PSc0OCclM0UlM0N0ZXh0IHg9Jzk2JyB5PScxMjUnIGZvbnQtc2l6ZT0nODUnIHRleHQtYW5jaG9yPSdtaWRkbGUnJTNFXfCfjZjvuI8lM0MvdGV4dCUzRSUzQy9zdmclM0UiLCAic2l6ZXMiOiAiMTkyeDE5MiIsICJ0eXBlIjogImltYWdlL3N2Zyt4bWwifV19">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        input, textarea {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overscroll-behavior-y: none;
+        }
+        
+        html {
+            height: -webkit-fill-available;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .option-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            touch-action: manipulation;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        
+        .option-card:active {
+            transform: scale(0.98);
+        }
+        
+        .option-card.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .city-card {
+            transition: transform 0.2s ease;
+        }
+        
+        .city-card:active {
+            transform: scale(0.98);
+        }
+        
+        .pulse-ring {
+            position: absolute;
+            border-radius: 50%;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); opacity: 1; }
+            40%, 50% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        
+        /* 防止iOS橡皮筋效果 */
+        .no-bounce {
+            overscroll-behavior: none;
+        }
+        
+        /* 安全区域适配 */
+        .safe-top { padding-top: env(safe-area-inset-top); }
+        .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+        
+        /* 隐藏滚动条但保持功能 */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* 按钮点击效果 */
+        .btn-active:active {
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+        
+        /* iOS底部固定元素适配 */
+        .ios-bottom-fix {
+            padding-bottom: max(env(safe-area-inset-bottom), 20px);
+        }
+        
+        /* 图表容器适配 */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        @media (max-width: 640px) {
+            .chart-container {
+                height: 250px;
+            }
+        }
+        
+        /* 防止字体大小调整 */
+        text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+    </style>
+</head>
+<body class="text-gray-800 no-bounce">
+
+    <!-- 主容器 -->
+    <div class="container mx-auto px-4 py-6 max-w-4xl min-h-screen flex flex-col">
+        
+        <!-- 头部 -->
+        <header class="text-center mb-6 text-white safe-top">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2 tracking-tight">🏙️ 城遇</h1>
+            <p class="text-sm md:text-base opacity-90">找到与你灵魂契合的理想之城</p>
+        </header>
+
+        <!-- 开始页面 -->
+        <div id="startScreen" class="glass-panel rounded-2xl p-6 md:p-8 text-center shadow-2xl flex-1 flex flex-col justify-center">
+            <div class="mb-6">
+                <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl mx-auto mb-4 flex items-center justify-center text-3xl shadow-lg">
+                    🎯
+                </div>
+                <h2 class="text-xl font-bold mb-3 text-gray-800">探索你的天选之城</h2>
+                <p class="text-gray-600 mb-4 text-sm leading-relaxed px-2">
+                    基于10个维度、15个真实城市数据<br>
+                    通过欧氏距离算法为你精准匹配
+                </p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 mb-6 text-left">
+                <div class="bg-purple-50 p-3 rounded-xl border border-purple-100">
+                    <div class="text-xl mb-1">📊</div>
+                    <div class="font-semibold text-purple-800 text-xs">科学算法</div>
+                    <div class="text-xs text-purple-600 scale-90 origin-left">多维匹配</div>
+                </div>
+                <div class="bg-blue-50 p-3 rounded-xl border border-blue-100">
+                    <div class="text-xl mb-1">🎨</div>
+                    <div class="font-semibold text-blue-800 text-xs">可视化</div>
+                    <div class="text-xs text-blue-600 scale-90 origin-left">雷达对比</div>
+                </div>
+                <div class="bg-pink-50 p-3 rounded-xl border border-pink-100">
+                    <div class="text-xl mb-1">✨</div>
+                    <div class="font-semibold text-pink-800 text-xs">个性化</div>
+                    <div class="text-xs text-pink-600 scale-90 origin-left">移居建议</div>
+                </div>
+            </div>
+
+            <button onclick="startTest()" class="btn-active bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3.5 rounded-full text-base font-bold shadow-lg w-full">
+                开始测试
+            </button>
+            <p class="mt-3 text-xs text-gray-500">预计用时 2-3 分钟 · 20道题目</p>
+            
+            <!-- 添加到主屏幕提示 -->
+            <div id="installTip" class="hidden mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800">
+                <span class="font-bold">💡 提示：</span>点击浏览器菜单"添加到主屏幕"，像App一样使用
+            </div>
+        </div>
+
+        <!-- 测试页面 -->
+        <div id="quizScreen" class="hidden glass-panel rounded-2xl p-5 shadow-2xl flex-1 flex flex-col">
+            <!-- 进度条 -->
+            <div class="mb-4">
+                <div class="flex justify-between mb-1.5 text-xs font-medium text-gray-600">
+                    <span id="progressText">第 1 / 20 题</span>
+                    <span id="progressPercent">5%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progressBar" class="progress-bar bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full" style="width: 5%"></div>
+                </div>
+            </div>
+
+            <!-- 题目内容 -->
+            <div id="questionContainer" class="fade-in flex-1 flex flex-col">
+                <h3 id="questionText" class="text-lg font-bold mb-4 text-gray-800 leading-snug"></h3>
+                
+                <div id="optionsContainer" class="space-y-3 flex-1">
+                    <!-- 选项将动态生成 -->
+                </div>
+            </div>
+
+            <!-- 导航按钮 -->
+            <div class="mt-4 flex justify-between items-center ios-bottom-fix">
+                <button id="prevBtn" onclick="previousQuestion()" class="hidden px-4 py-2 text-gray-500 text-sm font-medium active:text-gray-700 transition-colors btn-active">
+                    ← 上一题
+                </button>
+                <div class="flex-1"></div>
+                <button id="nextBtn" onclick="nextQuestion()" class="bg-gray-300 text-white px-6 py-2.5 rounded-full text-sm font-bold cursor-not-allowed opacity-50" disabled>
+                    下一题
+                </button>
+            </div>
+        </div>
+
+        <!-- 加载页面 -->
+        <div id="loadingScreen" class="hidden glass-panel rounded-2xl p-8 text-center shadow-2xl flex-1 flex flex-col justify-center items-center">
+            <div class="relative w-24 h-24 mb-6">
+                <div class="pulse-ring bg-purple-400 w-full h-full"></div>
+                <div class="pulse-ring bg-purple-400 w-full h-full" style="animation-delay: 0.5s"></div>
+                <div class="relative w-full h-full bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-3xl shadow-lg">
+                    🧮
+                </div>
+            </div>
+            <h2 class="text-lg font-bold mb-2 text-gray-800">正在分析数据...</h2>
+            <p id="loadingText" class="text-gray-600 text-sm">正在计算你的性格维度...</p>
+        </div>
+
+        <!-- 结果页面 -->
+        <div id="resultScreen" class="hidden space-y-4 pb-6">
+            <!-- 最佳匹配城市 -->
+            <div class="glass-panel rounded-2xl p-5 shadow-2xl border-2 border-yellow-400 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-bl-xl font-bold text-xs">
+                    🏆 最佳匹配
+                </div>
+                <div class="text-center mb-4">
+                    <div id="topCityName" class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-1"></div>
+                    <div id="topCityMatch" class="text-2xl font-bold text-yellow-500"></div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="chart-container">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-white/60 p-3 rounded-xl">
+                            <h4 class="font-bold text-gray-800 mb-1 text-sm">🎯 核心匹配点</h4>
+                            <p id="topCityReason" class="text-gray-700 text-xs leading-relaxed"></p>
+                        </div>
+                        <div class="bg-white/60 p-3 rounded-xl">
+                            <h4 class="font-bold text-gray-800 mb-1 text-sm">💡 移居建议</h4>
+                            <p id="topCityAdvice" class="text-gray-700 text-xs leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 其他匹配城市 -->
+            <div class="grid grid-cols-2 gap-3">
+                <div id="secondCity" class="glass-panel rounded-xl p-4 shadow-lg city-card border-l-4 border-purple-500">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-gray-800"></h3>
+                        <span class="text-lg font-bold text-purple-600 match-percent"></span>
+                    </div>
+                    <p class="text-gray-600 text-xs mb-2 line-clamp-2 city-desc"></p>
+                    <div class="flex flex-wrap gap-1 city-tags"></div>
+                </div>
+                <div id="thirdCity" class="glass-panel rounded-xl p-4 shadow-lg city-card border-l-4 border-pink-500">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-gray-800"></h3>
+                        <span class="text-lg font-bold text-pink-600 match-percent"></span>
+                    </div>
+                    <p class="text-gray-600 text-xs mb-2 line-clamp-2 city-desc"></p>
+                    <div class="flex flex-wrap gap-1 city-tags"></div>
+                </div>
+            </div>
+
+            <!-- 详细维度分析 -->
+            <div class="glass-panel rounded-2xl p-5 shadow-lg">
+                <h3 class="text-lg font-bold mb-4 text-gray-800">📊 你的城市性格画像</h3>
+                <div id="dimensionAnalysis" class="space-y-2 max-h-64 overflow-y-auto hide-scrollbar">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="grid grid-cols-2 gap-3 ios-bottom-fix">
+                <button onclick="shareResult()" class="btn-active bg-green-500 text-white py-3 rounded-full font-bold text-sm shadow-lg flex items-center justify-center gap-2">
+                    <span>📤</span> 分享结果
+                </button>
+                <button onclick="restartTest()" class="btn-active bg-white text-purple-600 py-3 rounded-full font-bold text-sm shadow-lg border-2 border-purple-600 flex items-center justify-center gap-2">
+                    <span>🔄</span> 再测一次
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 检测是否已安装为PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
+                self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
+                self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+                self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
+            `)).catch(() => {});
+        }
+
+        // 显示安装提示（如果不是PWA模式）
+        if (!window.matchMedia('(display-mode: standalone)').matches && !window.navigator.standalone) {
+            setTimeout(() => {
+                const tip = document.getElementById('installTip');
+                if (tip) tip.classList.remove('hidden');
+            }, 2000);
+        }
+
+        // 城市数据库（10个维度，每个维度0-10分）
+        const cities = {
+            '成都': {
+                scores: [6, 3, 6, 8, 9, 9, 7, 7, 6, 6],
+                tags: ['慢生活', '美食', '包容'],
+                desc: '休闲之都，生活气息浓厚',
+                advice: '适合追求work-life balance的人。注意：夏季湿热，收入相对一线较低。'
+            },
+            '上海': {
+                scores: [7, 9, 9, 9, 8, 8, 9, 9, 8, 8],
+                tags: ['国际化', '机会多', '精致'],
+                desc: '魔都，中国最国际化的城市',
+                advice: '适合野心勃勃的职场人。注意：生活成本高，竞争激烈。'
+            },
+            '杭州': {
+                scores: [7, 7, 8, 7, 7, 7, 8, 7, 7, 7],
+                tags: ['互联网', '宜居', '自然'],
+                desc: '数字经济之城，江南韵味',
+                advice: '适合互联网从业者。注意：近年房价飙升，交通拥堵。'
+            },
+            '北京': {
+                scores: [5, 10, 9, 10, 6, 7, 8, 10, 5, 10],
+                tags: ['文化', '资源', '历史'],
+                desc: '首都，政治文化中心',
+                advice: '适合文化、教育领域。注意：空气质量、通勤时间、户籍门槛。'
+            },
+            '深圳': {
+                scores: [9, 9, 9, 6, 9, 7, 9, 7, 8, 6],
+                tags: ['年轻', '创新', '效率'],
+                desc: '创新之城，平均年龄最低',
+                advice: '适合创业者、科技从业者。注意：文化设施相对欠缺。'
+            },
+            '广州': {
+                scores: [8, 7, 7, 7, 8, 9, 8, 8, 7, 6],
+                tags: ['烟火气', '务实', '美食'],
+                desc: '千年商都，务实包容',
+                advice: '适合喜欢烟火气的人。注意：气候湿热，粤语环境。'
+            },
+            '苏州': {
+                scores: [6, 6, 7, 8, 5, 6, 6, 7, 6, 6],
+                tags: ['园林', '制造', '宜居'],
+                desc: '最强地级市，古典现代融合',
+                advice: '适合制造业从业者，离上海近压力小。'
+            },
+            '西安': {
+                scores: [4, 5, 6, 9, 6, 7, 7, 8, 5, 7],
+                tags: ['历史', '碳水', '性价比'],
+                desc: '十三朝古都，底蕴深厚',
+                advice: '适合文化爱好者。注意：就业市场相对窄。'
+            },
+            '厦门': {
+                scores: [8, 5, 6, 6, 6, 8, 7, 6, 6, 5],
+                tags: ['海滨', '文艺', '小资'],
+                desc: '海上花园，文艺聚集地',
+                advice: '适合远程办公。注意：房价收入比极高。'
+            },
+            '长沙': {
+                scores: [5, 5, 6, 6, 8, 9, 8, 7, 6, 5],
+                tags: ['夜生活', '娱乐', '低房价'],
+                desc: '媒体艺术之都，房价洼地',
+                advice: '适合年轻人安家。注意：夏季酷热，职业天花板低。'
+            },
+            '青岛': {
+                scores: [5, 5, 6, 6, 6, 7, 6, 7, 6, 6],
+                tags: ['海滨', '啤酒', '德式'],
+                desc: '红瓦绿树碧海蓝天',
+                advice: '适合喜欢海滨但受不了南方湿热的人。'
+            },
+            '昆明': {
+                scores: [9, 3, 4, 5, 5, 6, 6, 6, 5, 4],
+                tags: ['春城', '气候', '慢生活'],
+                desc: '四季如春，气候最好',
+                advice: '适合养老、数字游民。注意：经济欠发达。'
+            },
+            '南京': {
+                scores: [5, 6, 7, 8, 6, 6, 7, 8, 6, 8],
+                tags: ['古都', '教育', '稳重'],
+                desc: '六朝古都，高校林立',
+                advice: '适合教育、科研从业者。注意：工资与房价不匹配。'
+            },
+            '武汉': {
+                scores: [5, 6, 7, 7, 7, 8, 7, 8, 7, 7],
+                tags: ['九省通衢', '高校多', '江湖'],
+                desc: '中部中心，大学生第一',
+                advice: '适合中部发展，科教资源丰富。'
+            },
+            '重庆': {
+                scores: [6, 6, 6, 7, 8, 9, 7, 7, 5, 5],
+                tags: ['8D魔幻', '火锅', '赛博'],
+                desc: '山城雾都，立体城市',
+                advice: '适合喜欢独特地形的人。注意：夏季酷热。'
+            }
+        };
+
+        const dimensions = [
+            '气候舒适度', '经济机会', '文化深度', '生活节奏', '社交活跃度', 
+            '美食文化', '包容开放度', '教育资源', '交通便利性', '医疗水平'
+        ];
+
+        // 简化的20题（每题4个选项）
+        const questions = [
+            { text: "周末早晨，你更希望？", options: ["去博物馆/书店", "约朋友brunch逛街", "睡到自然醒散步", "去公司加班学习"] },
+            { text: "对于工作，你最看重？", options: ["高薪快速晋升", "工作生活平衡", "国际化视野", "稳定低压力"] },
+            { text: "你理想的居住环境？", options: ["四季分明有雪", "温暖湿润绿意", "干燥清爽阳光", "有空调就行"] },
+            { text: "关于美食，你？", options: ["排队打卡网红店", "探索街头地道美食", "健康自己做饭", "随便吃不挑食"] },
+            { text: "你更享受的社交？", options: ["热闹聚会夜生活", "小范围深度交流", "线上社交独处", "兴趣社团认识人"] },
+            { text: "对于通勤，你能接受？", options: ["1小时+住得舒服", "30分钟地铁直达", "步行骑车可达", "远程不需要通勤"] },
+            { text: "你的消费观？", options: ["及时行乐体验", "精打细算储蓄", "投资自己教育", "品质不买平替"] },
+            { text: "关于历史文化？", options: ["非常喜欢去古迹", "有点兴趣偶尔看", "更关注当下未来", "无所谓不在意"] },
+            { text: "如果生病，你期望？", options: ["家门口三甲", "专科全国顶尖", "社区医院解决", "私立服务好"] },
+            { text: "有孩子（或计划），教育？", options: ["必须顶级学区", "国际双语教育", "快乐教育不卷", "还没考虑丁克"] },
+            { text: "你更适应的气候？", options: ["北方干燥四季", "南方湿润不冷", "高原凉爽紫外", "沿海舒适台风"] },
+            { text: "关于城市包容性？", options: ["移民城市平等", "本地文化浓厚", "能交朋友就行", "国际化大都市"] },
+            { text: "理想下班时间？", options: ["6点前有时间", "8点左右接受", "弹性结果导向", "奋斗10点后"] },
+            { text: "对于艺术展览演出？", options: ["每月必看", "偶尔关注", "不太关注", "只看线上"] },
+            { text: "喜欢的城市景观？", options: ["摩天大楼CBD", "江南小桥流水", "海滨沙滩日落", "山城错落有致"] },
+            { text: "关于方言？", options: ["愿意学当地话", "希望普通话", "喜欢听有趣", "能沟通就行"] },
+            { text: "你的运动偏好？", options: ["户外跑步骑行", "健身房瑜伽", "球类团队活动", "几乎不运动"] },
+            { text: "对于房价态度？", options: ["可以租房不买", "必须买压力小", "好地段背房贷", "家里全款支持"] },
+            { text: "看重城市特质？", options: ["创新创业氛围", "历史文化底蕴", "生活舒适幸福", "交通便利四通"] },
+            { text: "必须忍受的缺点？", options: ["高房价", "糟糕天气", "缺乏文化", "医疗教育一般"] }
+        ];
+
+        // 每题对应维度权重（简化版：每题主要影响2个维度）
+        const questionWeights = [
+            [2,7], [1,3], [0,0], [5,5], [3,4], [3,8], [1,3], [2,2], [9,9], [7,7],
+            [0,0], [6,6], [1,3], [2,6], [0,2], [6,2], [0,4], [1,3], [1,2], [0,2,7,9]
+        ];
+
+        let currentQuestion = 0;
+        let userScores = new Array(10).fill(5); // 默认中等
+        let answers = [];
+
+        function startTest() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('questionText').textContent = q.text;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            q.options.forEach((opt, idx) => {
+                const div = document.createElement('div');
+                div.className = 'option-card bg-white border-2 border-gray-200 rounded-xl p-3.5 cursor-pointer flex items-center gap-3 text-sm';
+                div.onclick = () => selectOption(idx);
+                div.innerHTML = `
+                    <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 option-letter flex-shrink-0">${String.fromCharCode(65 + idx)}</div>
+                    <div class="flex-1 text-left font-medium leading-snug">${opt}</div>
+                `;
+                container.appendChild(div);
+            });
+
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `第 ${currentQuestion + 1} / ${questions.length} 题`;
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+
+            document.getElementById('prevBtn').classList.toggle('hidden', currentQuestion === 0);
+            updateNextButton(false);
+            
+            if (answers[currentQuestion] !== undefined) {
+                selectOption(answers[currentQuestion], false);
+            }
+        }
+
+        function selectOption(idx, update = true) {
+            const cards = document.querySelectorAll('.option-card');
+            cards.forEach((card, i) => {
+                if (i === idx) {
+                    card.classList.add('selected');
+                    card.querySelector('.option-letter').classList.remove('bg-gray-100', 'text-gray-600');
+                    card.querySelector('.option-letter').classList.add('bg-white', 'text-purple-600');
+                } else {
+                    card.classList.remove('selected');
+                    card.querySelector('.option-letter').classList.add('bg-gray-100', 'text-gray-600');
+                    card.querySelector('.option-letter').classList.remove('bg-white', 'text-purple-600');
+                }
+            });
+            
+            if (update) {
+                answers[currentQuestion] = idx;
+                updateNextButton(true);
+                
+                // 自动下一题（延迟300ms让用户看到选中效果）
+                setTimeout(() => {
+                    if (currentQuestion < questions.length - 1) {
+                        nextQuestion();
+                    }
+                }, 300);
+            }
+        }
+
+        function updateNextButton(enabled) {
+            const btn = document.getElementById('nextBtn');
+            btn.disabled = !enabled;
+            if (enabled) {
+                btn.classList.remove('bg-gray-300', 'opacity-50', 'cursor-not-allowed');
+                btn.classList.add('bg-gradient-to-r', 'from-purple-600', 'to-pink-600');
+            } else {
+                btn.classList.add('bg-gray-300', 'opacity-50', 'cursor-not-allowed');
+                btn.classList.remove('bg-gradient-to-r', 'from-purple-600', 'to-pink-600');
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                calculateResult();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        function calculateResult() {
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('loadingScreen').classList.remove('hidden');
+            
+            // 计算得分（简化算法）
+            userScores = new Array(10).fill(5);
+            answers.forEach((ans, qIdx) => {
+                const weights = questionWeights[qIdx];
+                const score = ans === 0 ? 8 : ans === 1 ? 6 : ans === 2 ? 4 : 2;
+                weights.forEach(w => {
+                    if (w < 10) userScores[w] = (userScores[w] + score) / 2;
+                });
+            });
+
+            const texts = ["分析性格维度...", "比对城市数据...", "计算匹配度...", "生成报告..."];
+            let step = 0;
+            const interval = setInterval(() => {
+                if (step < texts.length) {
+                    document.getElementById('loadingText').textContent = texts[step];
+                    step++;
+                } else {
+                    clearInterval(interval);
+                    showResults();
+                }
+            }, 400);
+        }
+
+        function showResults() {
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+
+            const matches = Object.entries(cities).map(([name, data]) => {
+                const distance = Math.sqrt(
+                    data.scores.reduce((sum, score, idx) => sum + Math.pow(score - userScores[idx], 2), 0)
+                );
+                const similarity = Math.max(0, Math.round(100 - (distance * 8)));
+                return { name, ...data, similarity };
+            }).sort((a, b) => b.similarity - a.similarity);
+
+            const [first, second, third] = matches;
+
+            document.getElementById('topCityName').textContent = first.name;
+            document.getElementById('topCityMatch').textContent = `匹配度 ${first.similarity}%`;
+            document.getElementById('topCityReason').textContent = `你们在${getTopDimensions(first)}等方面高度契合。${first.desc}`;
+            document.getElementById('topCityAdvice').textContent = first.advice;
+
+            drawRadarChart(first);
+            displayCityCard('secondCity', second, 'bg-purple-100 text-purple-800');
+            displayCityCard('thirdCity', third, 'bg-pink-100 text-pink-800');
+            showDimensionAnalysis();
+
+            // 滚动到顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function getTopDimensions(city) {
+            const diffs = city.scores.map((s, i) => ({ dim: dimensions[i], diff: Math.abs(s - userScores[i]) }));
+            diffs.sort((a, b) => a.diff - b.diff);
+            return diffs.slice(0, 3).map(d => d.dim).join('、');
+        }
+
+        function drawRadarChart(topCity) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (Chart.getChart("radarChart")) Chart.getChart("radarChart").destroy();
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: dimensions.map(d => d.slice(0, 4)),
+                    datasets: [{
+                        label: '你的画像',
+                        data: userScores,
+                        backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                        borderWidth: 2,
+                        pointRadius: 2
+                    }, {
+                        label: topCity.name,
+                        data: topCity.scores,
+                        backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                        borderColor: 'rgba(236, 72, 153, 1)',
+                        pointBackgroundColor: 'rgba(236, 72, 153, 1)',
+                        borderWidth: 2,
+                        pointRadius: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: { stepSize: 2, font: { size: 8 } },
+                            pointLabels: { font: { size: 9 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function displayCityCard(id, city, tagClass) {
+            const el = document.getElementById(id);
+            el.querySelector('h3').textContent = city.name;
+            el.querySelector('.match-percent').textContent = city.similarity + '%';
+            el.querySelector('.city-desc').textContent = city.desc;
+            el.querySelector('.city-tags').innerHTML = city.tags.map(t => 
+                `<span class="${tagClass} px-2 py-0.5 rounded-full text-[10px] font-medium">${t}</span>`
+            ).join('');
+        }
+
+        function showDimensionAnalysis() {
+            const analyses = userScores.map((score, i) => ({
+                name: dimensions[i],
+                score: score.toFixed(1),
+                level: score >= 7 ? '高' : score >= 5 ? '中' : '低',
+                color: score >= 7 ? 'bg-green-500' : score >= 5 ? 'bg-blue-500' : 'bg-gray-400'
+            })).sort((a, b) => b.score - a.score);
+
+            document.getElementById('dimensionAnalysis').innerHTML = analyses.map(a => `
+                <div class="flex items-center gap-3 p-2 bg-white/50 rounded-lg">
+                    <div class="w-16 text-xs font-medium text-gray-700">${a.name}</div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2">
+                            <div class="flex-1 bg-gray-200 rounded-full h-1.5">
+                                <div class="${a.color} h-1.5 rounded-full" style="width: ${a.score * 10}%"></div>
+                            </div>
+                            <span class="text-xs font-bold w-6">${a.score}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function shareResult() {
+            const topCity = document.getElementById('topCityName').textContent;
+            const match = document.getElementById('topCityMatch').textContent;
+            const text = `我在【城遇】测试中发现，${topCity}是我的天选之城！${match}匹配度。快来测测你的：` + window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({ title: '城遇 - 找到你的天选之城', text: text, url: window.location.href });
+            } else {
+                // 复制到剪贴板
+                const input = document.createElement('input');
+                input.value = text;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                alert('结果已复制到剪贴板，快去分享吧！');
+            }
+        }
+
+        function restartTest() {
+            currentQuestion = 0;
+            userScores = new Array(10).fill(5);
+            answers = [];
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 触摸优化：防止双击缩放
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) e.preventDefault();
+            lastTouchEnd = now;
+        }, false);
+
+        // 防止iOS橡皮筋效果
+        document.body.addEventListener('touchmove', (e) => {
+            if (e.target.closest('.hide-scrollbar')) return;
+            if (document.body.scrollHeight <= window.innerHeight) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>
